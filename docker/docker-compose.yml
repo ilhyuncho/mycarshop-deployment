@@ -1,16 +1,5 @@
 version: "3.8"
 services:
-  mycarshop:
-    depends_on:
-      - mariadb
-    image: "mycarshop"
-    container_name: "mycarshop-service"
-    ports:
-      - 8080:8080
-    environment:
-      - BPL_JVM_THREAD_COUNT=50
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/project2db
-
   mariadb:
     image: "mariadb"
     container_name: "mariadb"
@@ -21,3 +10,24 @@ services:
       - MARIADB_USER=webuser
       - MARIADB_DATABASE=project2db
       - MARIADB_PASSWORD=abcd1234
+    networks:
+      - mycarshop_nw1
+
+  mycarshop:
+    depends_on:
+      - mariadb
+    build:
+      context: D:\project\Intellij_project\mycarshop
+      dockerfile: Dockerfile
+    container_name: "mycarshop-service"
+    ports:
+      - 8080:8080
+    environment:
+      - BPL_JVM_THREAD_COUNT=50
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/project2db
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MariaDBDialect
+    networks:
+      - mycarshop_nw1
+
+networks:
+  mycarshop_nw1:

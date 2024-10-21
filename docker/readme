@@ -1,3 +1,6 @@
 docker-compose.yml 실행시
 - 실행전 mycarshop 이미지가 docker 컨테이너에 올라가 있어야 함
 - mariadb는 도커 허브에서 다운받아서 상관 없음
+
+[개선]
+- docker-compose 실행시 mycarshop 솔루션의 Dockerfile로 빌드 처리되도록 수정
