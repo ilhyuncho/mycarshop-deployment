@@ -13,9 +13,22 @@ services:
     networks:
       - mycarshop_nw1
 
+  config-service:
+    build:
+      context: D:\project\Intellij_project\cloud-native\config-service
+      dockerfile: Dockerfile
+    container_name: "config-service"
+    ports:
+      - 8888:8888
+    networks:
+      - mycarshop_nw1
+    expose:
+      - 8888
+
   mycarshop:
     depends_on:
       - mariadb
+      - config-service
     build:
       context: D:\project\Intellij_project\mycarshop
       dockerfile: Dockerfile
@@ -28,6 +41,7 @@ services:
       - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MariaDBDialect
     networks:
       - mycarshop_nw1
+    restart: always
 
 networks:
   mycarshop_nw1:
